@@ -10,15 +10,15 @@ const ProductPage = () => {
     if (status === "idle") dispatch(fetchProducts());
   }, [status, dispatch]);
 
-  if (status === "loading") return <p>Загрузка...</p>;
-  if (status === "failed") return <p>Ошибка: {error}</p>;
+  if (status === "loading") return <p>Error...</p>;
+  if (status === "failed") return <p>Loading: {error}</p>;
 
   return (
     <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
       {items.map((product) => (
         <div key={product.id} style={{ border: "1px solid #ccc", padding: "10px", width: "200px" }}>
           <h3>{product.name}</h3>
-          <p>Цена: {product.price} ₽</p>
+          <p>Price: {product.price}</p>
         </div>
       ))}
     </div>
