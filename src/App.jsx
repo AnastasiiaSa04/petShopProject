@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import Navbar from "./components/header/navbar";
-
+import { ThemeProvider } from "@mui/material/styles";
 import Main from "./pages/main";
 import ProductPage from "./pages/products";
 import BasketPage from "./pages/basket";
@@ -10,9 +10,11 @@ import CategoriesPage from "./pages/categories";
 import SalesPage from "./pages/sales";
 import NotFound from "./pages/notFoundPage";
 import "./App.css";
+import theme from "./theme";
 
 function App() {
   return (
+    <ThemeProvider theme={theme}>
     <Provider store={store}>
       <Router>
         <Navbar />
@@ -26,6 +28,7 @@ function App() {
         </Routes>
       </Router>
     </Provider>
+    </ThemeProvider>
   );
 }
 

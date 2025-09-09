@@ -4,19 +4,15 @@ const basketSlice = createSlice({
   name: "basket",
   initialState: [],
   reducers: {
-    addToCart: (state, action) => {
+    addItem: (state, action) => {
       state.push(action.payload);
     },
-    removeFromBasket: (state, action) => {
+    removeItem: (state, action) => {
       return state.filter(item => item.id !== action.payload);
     },
-    clearBasket: () => {
-      return [];
-    },
+    clearBasket: () => [],
   },
 });
 
-export const { addTobasket, removeFromBasket, clearBasket } = basketSlice.actions;
-
-
+export const { addItem, removeItem, clearBasket } = basketSlice.actions;
 export default basketSlice.reducer;

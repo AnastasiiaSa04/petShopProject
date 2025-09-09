@@ -1,0 +1,21 @@
+
+.bannerContainer {
+  height: 600px;
+  display: flex;
+  align-items: center;
+  color: white;
+  background-size: cover;
+  background-position: center;
+}
+
+.bannerButton {
+  margin-top: 16px;
+}
+
+.lineToButton {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
