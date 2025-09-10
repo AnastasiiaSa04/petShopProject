@@ -1,20 +1,6 @@
 import React, { useState } from "react";
 import { Box, TextField, Button, Typography } from "@mui/material";
 
-const inputStyle = {
-  input: { color: "#fff" },
-  label: { color: "#fff" },
-  backgroundColor: "rgba(255,255,255,0.1)",
-  borderRadius: 2,
-  "& .MuiFilledInput-root": {
-    backgroundColor: "rgba(255,255,255,0.1)",
-    "&:hover": { backgroundColor: "rgba(255,255,255,0.15)" },
-  },
-  "& .MuiInputBase-root:before, & .MuiInputBase-root:after": {
-    borderBottom: "none",
-  },
-};
-
 export default function DiscountForm({ submitted, onSubmit }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -30,36 +16,77 @@ export default function DiscountForm({ submitted, onSubmit }) {
 
   if (submitted)
     return (
-      <Typography variant="body1" sx={{ color: "#fff" }}>
-       Thank you! Your discount request has been submitted.
+      <Typography variant="h4" sx={{ color: "#fff", textAlign: "center" }}>
+        Thank you! Your discount request has been submitted.
       </Typography>
-      
     );
 
   return (
     <Box
       component="form"
       onSubmit={handleSubmit}
-      sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+      }}
     >
-      {["Name", "Phone number", "Email"].map((label, idx) => (
-        <TextField
-          key={label}
-          label={label}
-          type={label === "Email" ? "email" : "text"}
-          value={[name, phone, email][idx]}
-          onChange={(e) => {
-            if (idx === 0) setName(e.target.value);
-            if (idx === 1) setPhone(e.target.value);
-            if (idx === 2) setEmail(e.target.value);
-          }}
-          required
-          variant="filled"
-          sx={inputStyle}
-        />
-      ))}
-      <Button type="submit" variant="contained" sx={{ mt: 2 }}>
-        Get Discount
+      <TextField
+        label="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        required
+        variant="filled"
+        InputProps={{ sx: { fontSize: "16px", color: "#fff" } }}
+        InputLabelProps={{ sx: { fontSize: "14px", color: "#fff" } }}
+        sx={{
+          borderRadius: 2,
+          "& .MuiFilledInput-root": {
+            backgroundColor: "rgba(171, 222, 232, 0.1)",
+            "&:hover": { backgroundColor: "rgba(166, 202, 224, 0.15)" },
+          },
+        }}
+      />
+      <TextField
+        label="Phone number"
+        type="tel"
+        value={phone}
+        onChange={(e) => setPhone(e.target.value)}
+        required
+        variant="filled"
+        InputProps={{ sx: { fontSize: "16px", color: "#fff" } }}
+        InputLabelProps={{ sx: { fontSize: "14px", color: "#fff" } }}
+        sx={{
+          borderRadius: 2,
+          "& .MuiFilledInput-root": {
+            backgroundColor: "rgba(171, 222, 232, 0.1)",
+            "&:hover": { backgroundColor: "rgba(166, 202, 224, 0.15)" },
+          },
+        }}
+      />
+      <TextField
+        label="Email"
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+        variant="filled"
+        InputProps={{ sx: { fontSize: "16px", color: "#fff" } }}
+        InputLabelProps={{ sx: { fontSize: "14px", color: "#fff" } }}
+        sx={{
+          borderRadius: 2,
+          "& .MuiFilledInput-root": {
+            backgroundColor: "rgba(171, 222, 232, 0.1)",
+            "&:hover": { backgroundColor: "rgba(166, 202, 224, 0.15)" },
+          },
+        }}
+      />
+      <Button
+        type="submit"
+        variant="contained"
+        sx={{ mt: 2, mb: 10, textTransform: "none" }}
+      >
+        Get a discount
       </Button>
     </Box>
   );

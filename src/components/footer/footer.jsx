@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Link as MuiLink } from "@mui/material";
+import { Box, Link as MuiLink,Typography } from "@mui/material";
 import instagramm from "../../assets/icons/instagram.png";
 import Whatsapp from "../../assets/icons/Whatsapp.svg";
 
@@ -16,8 +16,8 @@ const Card = ({ label, children, width }) => (
       justifyContent: "center",
     }}
   >
-    <Box sx={{ fontSize: "14px", color: "#6B6B6B", mb: "8px" }}>{label}</Box>
-    <Box sx={{ fontSize: "22px", fontWeight: 700, color: "#1A1A1A" }}>
+    <Box sx={{ fontSize: "15px", color: "#8B8B8B", mb: "8px" }}>{label}</Box>
+    <Box sx={{ fontSize: "25px", fontWeight: 600, color: "#282828", mb: "8px" }}>
       {children}
     </Box>
   </Box>
@@ -29,16 +29,17 @@ export default function Footer() {
       <Box
         component="footer"
         sx={{
-          py: "60px",
+          py: "40px",
           px: "40px",
-          bgcolor: "#fff",
           display: "flex",
           flexDirection: "column",
           alignItems: "flex-start",
         }}
       >
-        <Box sx={{ fontSize: "40px", fontWeight: 700, mb: "32px" }}>
-          Contact
+        <Box sx={{ mb: "32px" }}>
+        <Typography variant="h2" sx={{ mb: 3 }}>
+          Contacts
+        </Typography>
         </Box>
         <Box
           sx={{

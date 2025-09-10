@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "../../redux/slices/categorySlice";
 import { Link } from "react-router-dom";
+import { Box, Typography, Card, CardContent, CardMedia, Container } from "@mui/material";
 
 const CategoriesPage = () => {
   const dispatch = useDispatch();
@@ -11,21 +12,35 @@ const CategoriesPage = () => {
     if (status === "idle") dispatch(fetchCategories());
   }, [status, dispatch]);
 
-  if (status === "loading") return <p>Загрузка категорий...</p>;
-  if (status === "failed") return <p>Ошибка: {error}</p>;
+  if (status === "loading") return <p>Loading...</p>;
+  if (status === "failed") return <p>Error: {error}</p>;
 
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
-      {items.map((category) => (
-        <Link key={category.id} to={`/categories/${category.id}`} style={{ textDecoration: "none" }}>
-          <div style={{ border: "1px solid #ccc", padding: "10px", width: "200px" }}>
-            <img src={category.image} alt={category.title} style={{ width: "100%", height: "120px", objectFit: "cover" }} />
-            <h4>{category.title}</h4>
-          </div>
-        </Link>
-      ))}
-    </div>
+    <Container sx={{ py: 6 }}>
+      <Typography variant="h2" sx={{ mb: 3 }}>Categories</Typography>
+      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 3 }}>
+        {(items || []).map((category) => (
+          <Link key={category.id} to={`/categories/${category.id}`} style={{ textDecoration: "none" }}>
+            <Card sx={{ width: 260, cursor: "pointer" }}>
+              <CardMedia
+                component="img"
+                image={`http://localhost:3333${category.image}`}
+                alt={category.title}
+                sx={{ height: 150, objectFit: "cover" }}
+              />
+              <CardContent>
+                <Typography variant="h6" fontSize="15px" fontWeight="300">
+                  {category.title}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Link>
+        ))}
+      </Box>
+    </Container>
   );
 };
 
 export default CategoriesPage;
+
+
