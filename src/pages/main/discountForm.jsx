@@ -33,6 +33,7 @@ export default function DiscountForm({ submitted, onSubmit }) {
       <Typography variant="body1" sx={{ color: "#fff" }}>
        Thank you! Your discount request has been submitted.
       </Typography>
+      
     );
 
   return (

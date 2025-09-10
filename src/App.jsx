@@ -11,6 +11,7 @@ import SalesPage from "./pages/sales";
 import NotFound from "./pages/notFoundPage";
 import "./App.css";
 import theme from "./theme";
+import Footer from "./components/footer/footer.jsx";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/sales" element={<SalesPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <Footer />
       </Router>
     </Provider>
     </ThemeProvider>

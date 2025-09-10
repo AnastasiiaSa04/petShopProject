@@ -63,46 +63,64 @@ export default function Main() {
           ))}
         </Box>
       </Container>
+<Box
+  sx={{
+    background: "linear-gradient(90deg, #0D50FF 0%, #2451C6 100%)",
+    py: 8,
+  }}
+>
+  <Container
+    sx={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 6,
+      color: "#fff",
+    }}
+  >
+    {/* Заголовок сверху */}
+    <Typography
+      variant="h2"
+      sx={{
+        fontWeight: 700,
+        textAlign: "center",
+        mb: 4,
+      }}
+    >
+      5% off on the first order
+    </Typography>
+
+    {/* Блок с картинкой и формой */}
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: { xs: "column", md: "row" },
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 6,
+        width: "100%",
+      }}
+    >
+      {/* Картинка */}
       <Box
+        component="img"
+        src={formBanner}
+        alt="Pets"
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          background: "linear-gradient(90deg, #0D50FF 0%, #2451C6 100%)",
-          py: 8,
+          // width: "50%",
+          // maxWidth: "600px",
+          display: { xs: "none", md: "block" },
         }}
-      >
-        <Container
-          sx={{
-            display: "flex",
-            flexDirection: { xs: "column", md: "row" },
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 6,
-          }}
-        >
-          <Box
-            component="img"
-            src={formBanner}
-            alt="Pets"
-            sx={{
-              width: "50%",
-              maxWidth: "600px",
-              display: { xs: "none", md: "block" },
-              alignSelf: "flex-end",
-            }}
-          />
-          <Box sx={{ flex: 1, color: "#fff", maxWidth: 600 }}>
-            <Typography
-              variant="h1"
-              flexWrap="no-wrap"
-              sx={{ fontWeight: 700, textAlign: { xs: "center", md: "center"  } }}
-            >
-              5% off on the first order
-            </Typography>
-            <DiscountForm submitted={submitted} onSubmit={() => setSubmitted(true)} />
-          </Box>
-        </Container>
+      />
+
+      {/* Форма */}
+      <Box sx={{ flex: 1, maxWidth: 600 }}>
+        <DiscountForm submitted={submitted} onSubmit={() => setSubmitted(true)} />
       </Box>
+    </Box>
+  </Container>
+</Box>
     </Box>
   );
 }
