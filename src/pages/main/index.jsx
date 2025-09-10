@@ -11,20 +11,20 @@ import {
   CardContent,
   CardMedia,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
+import { useTheme } from "@mui/material/styles";
 
 import backgroundImg from "../../assets/images/mainBanner.svg";
 import formBanner from "../../assets/images/formBanner.svg";
 import styles from "../main/styles.module.css";
 import DiscountForm from "./discountForm.jsx";
-import theme from "../../theme.js";
-
 
 export default function Main() {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categories);
   const saleItems = useSelector((state) => state.sale.items || []);
   const [submitted, setSubmitted] = useState(false);
+  const theme = useTheme();
 
   useEffect(() => {
     dispatch(fetchCategories());
@@ -45,7 +45,7 @@ export default function Main() {
             variant="contained"
             color="secondary"
             size="large"
-            component={Link}
+            component={RouterLink}
             to="/products"
           >
             Check out
@@ -53,16 +53,34 @@ export default function Main() {
         </Container>
       </Box>
       <Container sx={{ py: 6 }}>
-        <Typography variant="h2" sx={{ mb: 3 }}>
-          Categories
-        </Typography>
-        <Button variant="outlined" component={Link} to="/categories">
-          All categories
-        </Button>
-        <Box
-          className={styles.lineToButton}
-          sx={{ mt: 3, display: "flex", gap: 3, flexWrap: "wrap" }}
-        >
+        <Box display="flex" alignItems="center" mb={2}>
+          <Typography variant="h2" sx={{ whiteSpace: "nowrap" }}>
+            Categories
+          </Typography>
+          <Box
+            sx={{
+              flex: 1,
+              borderBottom: "1px solid #8B8B8B",
+              mx: 2,
+            }}
+          />
+          <Button
+            component={RouterLink}
+            to="/categories"
+            variant="outlined"
+            sx={{
+              whiteSpace: "nowrap",
+              border: "1px solid #8B8B8B",
+              fontSize: theme.typography.button.fontSize,
+              color: "#8B8B8B",
+              fontWeight: theme.typography.button.fontWeight,
+              textTransform: theme.typography.button.textTransform,
+            }}
+          >
+            All categories
+          </Button>
+        </Box>
+        <Box sx={{ mt: 3, display: "flex", gap: 3, flexWrap: "wrap" }}>
           {(categories.items || []).slice(0, 4).map((category) => (
             <Card key={category.id} sx={{ width: 260 }}>
               <CardMedia
@@ -106,60 +124,68 @@ export default function Main() {
               alt="Pets"
               sx={{ display: { xs: "none", md: "block" }, width: "auto" }}
             />
-            <Box sx={{ flex: 1, maxWidth: 600, fontSize: "16px", fontWeight: 400 }}>
-              <DiscountForm
-                submitted={submitted}
-                onSubmit={() => setSubmitted(true)}
-              />
+            <Box sx={{ flex: 1, maxWidth: 600, fontSize: theme.typography.body1.fontSize }}>
+              <DiscountForm submitted={submitted} onSubmit={() => setSubmitted(true)} />
             </Box>
           </Box>
         </Container>
       </Box>
       <Container sx={{ pt: 5 }}>
-        <Typography variant="h2">Sale</Typography>
-        <Button variant="outlined" component={Link} to="/sale">
+        <Typography variant="h2" gutterBottom>
+          Sale
+        </Typography>
+        <Button variant="outlined" component={RouterLink} to="/sale" sx={{ mb: 3 }}>
           All sales
         </Button>
-        <Box sx={{ mt: 3, display: "flex", gap: 3, flexWrap: "wrap" }}>
-          {saleItems.slice(0, 4).map((item) => (
-            <Card
-              key={item.id}
-              sx={{
-                width: 260,
-                position: "relative",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                height: 360,
-                overflow: "hidden",
-              }}
-            >
-              <CardMedia
-                component="img"
-                image={`http://localhost:3333${item.image}`}
-                alt={item.title}
-                sx={{ height: 200, objectFit: "cover" }}
-              />
-              <CardContent
+
+        <Box sx={{ display: "flex", gap: 3, flexWrap: "wrap" }}>
+          {saleItems.slice(0, 4).map((item) => {
+            const discountPercent =
+              item.price && item.discont_price
+                ? Math.round(((item.price - item.discont_price) / item.price) * 100)
+                : 0;
+
+            return (
+              <Card
+                key={item.id}
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "flex-end",
-                  flexGrow: 1,
+                  width: 260,
+                  position: "relative",
                 }}
               >
-                <Typography variant="h6">{item.title}</Typography>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    gap: 1,
-                  }}
-                >
+                {discountPercent > 0 && (
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: 10,
+                      right: 10,
+                      bgcolor: theme.palette.secondary.main,
+                      color: "#fff",
+                      px: 1,
+                      py: 0.5,
+                      borderRadius: 1,
+                      fontWeight: theme.typography.button.fontWeight,
+                      fontSize: theme.typography.button.fontSize,
+                      fontFamily: theme.typography.fontFamily,
+                      zIndex: 10,
+                    }}
+                  >
+                    -{discountPercent}%
+                  </Box>
+                )}
+
+                <CardMedia
+                  component="img"
+                  image={`http://localhost:3333${item.image}`}
+                  alt={item.title}
+                  sx={{ height: 200, objectFit: "cover" }}
+                />
+
+                <CardContent>
+                  <Typography variant="h6">{item.title}</Typography>
                   {item.price && item.discont_price && (
-                    <>
-                      <Typography variant="body1" color="black">
+                    <Box sx={{ display: "flex", gap: 1 }}>
+                      <Typography fontSize="40px" fontWeight="600" color="black">
                         ${item.discont_price}
                       </Typography>
                       <Typography
@@ -168,12 +194,12 @@ export default function Main() {
                       >
                         ${item.price}
                       </Typography>
-                    </>
+                    </Box>
                   )}
-                </Box>
-              </CardContent>
-            </Card>
-          ))}
+                </CardContent>
+              </Card>
+            );
+          })}
         </Box>
       </Container>
     </Box>
