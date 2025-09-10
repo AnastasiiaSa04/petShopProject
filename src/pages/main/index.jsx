@@ -52,8 +52,6 @@ export default function Main() {
           </Button>
         </Container>
       </Box>
-
-      {/* Categories Section */}
       <Container sx={{ py: 6 }}>
         <Typography variant="h2" sx={{ mb: 3 }}>
           Categories
@@ -79,8 +77,6 @@ export default function Main() {
           ))}
         </Box>
       </Container>
-
-      {/* Discount Form Section */}
       <Box sx={{ background: "linear-gradient(90deg, #0D50FF 0%, #2451C6 100%)" }}>
         <Container
           sx={{
@@ -110,7 +106,6 @@ export default function Main() {
               alt="Pets"
               sx={{ display: { xs: "none", md: "block" }, width: "auto" }}
             />
-            {/* Ограничиваем шрифты только для формы */}
             <Box sx={{ flex: 1, maxWidth: 600, fontSize: "16px", fontWeight: 400 }}>
               <DiscountForm
                 submitted={submitted}
@@ -120,8 +115,6 @@ export default function Main() {
           </Box>
         </Container>
       </Box>
-
-      {/* Sale Section */}
       <Container sx={{ pt: 5 }}>
         <Typography variant="h2">Sale</Typography>
         <Button variant="outlined" component={Link} to="/sale">
@@ -141,15 +134,12 @@ export default function Main() {
                 overflow: "hidden",
               }}
             >
-              {/* Image */}
               <CardMedia
                 component="img"
                 image={`http://localhost:3333${item.image}`}
                 alt={item.title}
                 sx={{ height: 200, objectFit: "cover" }}
               />
-
-              {/* Card Content */}
               <CardContent
                 sx={{
                   display: "flex",
