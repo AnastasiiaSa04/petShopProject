@@ -99,23 +99,14 @@ export default function Basket() {
                   ${(i.discont_price || i.price) * i.quantity}
                 </Typography>
 
-                <Button color="error" onClick={() => dispatch(removeFromBasket(i.id))}>
+                <Button color="black" onClick={() => dispatch(removeFromBasket(i.id))}>
                   X
                 </Button>
               </Box>
             ))}
 
-            <Button
-              variant="contained"
-              color="secondary"
-              sx={{ mt: 2, width: "200px" }}
-              onClick={() => dispatch(clearBasket())}
-            >
-              Clear Basket
-            </Button>
           </Box>
 
-          {/* Блок Order Details */}
           <Paper
             elevation={3}
             sx={{
@@ -158,8 +149,8 @@ export default function Basket() {
 
             <Button
               variant="contained"
-              color="secondary"
-              sx={{ mt: 1 }}
+              sx={{ mt: 1, bgcolor: "#0D50FF",
+                           color: "#FFF", "&:hover": { bgcolor: "#282828", color: "#FFF" }, }}
               onClick={handleOrder}
             >
               Order
@@ -168,7 +159,6 @@ export default function Basket() {
         </Box>
       )}
 
-      {/* Модалка подтверждения */}
       <Dialog
         open={openModal}
         onClose={() => setOpenModal(false)}
@@ -177,7 +167,6 @@ export default function Basket() {
             backgroundColor: theme.palette.secondary.main,
             color: "#fff",
             width: "420px",
-            height: "320px",
             borderRadius: "12px",
             position: "relative",
             display: "flex",
@@ -185,6 +174,7 @@ export default function Basket() {
             justifyContent: "center",
             alignItems: "center",
             textAlign: "left",
+            scroll: "none",
             p: 4,
           },
         }}
@@ -207,7 +197,7 @@ export default function Basket() {
             fontWeight: 600,
             fontSize: "40px",
             mb: 2,
-            textAlign: "start",
+            textAlign: "left",
           }}
         >
           Congratulations!

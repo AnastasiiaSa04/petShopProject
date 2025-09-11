@@ -135,7 +135,7 @@ function SalesPage() {
                     sx={{ bgcolor: "#0D50FF", color:"#FFF", "&:hover": { bgcolor: "#282828", color: "#FFF" } }}
                     onClick={() => handleAddToBasket(product)}
                   >
-                    Add to basket
+                    Add to cart
                   </Button>
                 </Box>
               )}

@@ -17,14 +17,24 @@ export default function Navbar() {
         >
           <img src={logoHeader} alt="Pet Shop Logo" style={{ height: 40, marginRight: 10 }} />
         </Box>
+
         <Box sx={{ display: "flex", gap: 3, flexGrow: 1, justifyContent: "center" }}>
           <Button color="inherit" component={Link} to="/">Main</Button>
           <Button color="inherit" component={Link} to="/categories">Categories</Button>
           <Button color="inherit" component={Link} to="/sales">Sales</Button>
           <Button color="inherit" component={Link} to="/products">Products</Button>
         </Box>
+
         <IconButton component={Link} to="/basket" color="inherit">
-          <Badge badgeContent={items.length} color="error">
+          <Badge
+            badgeContent={items.length}
+            sx={{
+              "& .MuiBadge-badge": {
+                backgroundColor: "#0D50FF",
+                color: "#fff",
+              },
+            }}
+          >
             <img src={iconBasket} alt="Basket" style={{ height: 28 }} />
           </Badge>
         </IconButton>
@@ -32,4 +42,5 @@ export default function Navbar() {
     </AppBar>
   );
 }
+
 

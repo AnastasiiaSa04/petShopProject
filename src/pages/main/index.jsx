@@ -33,7 +33,7 @@ export default function Main() {
 
   return (
     <Box>
-      {/* Баннер */}
+
       <Box
         className={styles.bannerContainer}
         style={{ backgroundImage: `url(${backgroundImg})` }}
@@ -54,7 +54,6 @@ export default function Main() {
         </Container>
       </Box>
 
-      {/* Категории */}
       <Container sx={{ py: 6 }}>
         <Box display="flex" alignItems="center" mb={2}>
           <Typography variant="h2" sx={{ whiteSpace: "nowrap" }}>
@@ -82,7 +81,7 @@ export default function Main() {
             <Card
               key={category.id}
               component={RouterLink}
-              to={`/categories/${category.id}`} // <- переход на страницу категории
+              to={`/categories/${category.id}`} 
               sx={{ width: 260, textDecoration: "none", color: "inherit" }}
             >
               <CardMedia
@@ -97,8 +96,6 @@ export default function Main() {
           ))}
         </Box>
       </Container>
-
-      {/* Форма скидки */}
       <Box sx={{ background: "linear-gradient(90deg, #0D50FF 0%, #2451C6 100%)" }}>
         <Container
           sx={{
@@ -135,14 +132,28 @@ export default function Main() {
         </Container>
       </Box>
 
-      {/* Распродажа */}
       <Container sx={{ pt: 5 }}>
-        <Typography variant="h2" gutterBottom>
-          Sale
-        </Typography>
-        <Button variant="outlined" component={RouterLink} to="/sale" sx={{ mb: 3 }}>
-          All sales
-        </Button>
+        <Box display="flex" alignItems="center" mb={2}>
+          <Typography variant="h2" sx={{ whiteSpace: "nowrap" }}>
+            Sale
+          </Typography>
+          <Box sx={{ flex: 1, borderBottom: "1px solid #8B8B8B" }} />
+          <Button
+            component={RouterLink}
+            to="/sales"
+            variant="outlined"
+            sx={{
+              whiteSpace: "nowrap",
+              border: "1px solid #8B8B8B",
+              fontSize: theme.typography.button.fontSize,
+              color: "#8B8B8B",
+              fontWeight: theme.typography.button.fontWeight,
+              textTransform: theme.typography.button.textTransform,
+            }}
+          >
+            All sales
+          </Button>
+        </Box>
 
         <Box sx={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
           {saleItems.slice(0, 4).map((item) => {
@@ -155,7 +166,7 @@ export default function Main() {
               <Card
                 key={item.id}
                 component={RouterLink}
-                to={`/products/${item.id}`} // <- переход на страницу товара
+                to={`/products/${item.id}`} 
                 sx={{
                   width: 260,
                   position: "relative",
