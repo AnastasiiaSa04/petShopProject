@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Box, TextField, Button, Typography } from "@mui/material";
 
 export default function DiscountForm({ submitted, onSubmit }) {

@@ -12,6 +12,9 @@ import NotFound from "./pages/notFoundPage";
 import "./App.css";
 import theme from "./theme";
 import Footer from "./components/footer/footer.jsx";
+import CategoryDetailsPage from "./pages/categories/categoriesDetailsPage.jsx";
+import ProductDetailsPage from "./pages/products/productDetailsPage.jsx";
+
 
 function App() {
   return (
@@ -26,6 +29,9 @@ function App() {
           <Route path="/categories" element={<CategoriesPage />} />
           <Route path="/sales" element={<SalesPage />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/categories" element={<CategoriesPage />} />
+          <Route path="/categories/:categoryId" element={<CategoryDetailsPage />} />
+          <Route path="/products/:productId" element={<ProductDetailsPage />} />
         </Routes>
         <Footer />
       </Router>

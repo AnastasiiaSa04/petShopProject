@@ -61,7 +61,6 @@ export default function Main() {
             sx={{
               flex: 1,
               borderBottom: "1px solid #8B8B8B",
-              mx: 2,
             }}
           />
           <Button
@@ -138,7 +137,7 @@ export default function Main() {
           All sales
         </Button>
 
-        <Box sx={{ display: "flex", gap: 3, flexWrap: "wrap" }}>
+        <Box sx={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
           {saleItems.slice(0, 4).map((item) => {
             const discountPercent =
               item.price && item.discont_price

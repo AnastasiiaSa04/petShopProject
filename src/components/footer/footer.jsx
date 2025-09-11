@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Link as MuiLink,Typography } from "@mui/material";
 import instagramm from "../../assets/icons/instagram.png";
 import Whatsapp from "../../assets/icons/Whatsapp.svg";
