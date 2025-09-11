@@ -7,30 +7,29 @@ import {
   Card,
   CardMedia,
   CardContent,
-  Button,
 } from "@mui/material";
 
 export default function CategoriesPage() {
-  const { id } = useParams(); // id категории из URL
+  const { id } = useParams(); 
   const [category, setCategory] = useState(null);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // URL заглушки, если нет картинки
   const placeholderImage = "https://via.placeholder.com/260x200?text=No+Image";
 
   useEffect(() => {
     const loadCategoryAndProducts = async () => {
       try {
-        // Получаем категорию
+   
         const resCategory = await fetch(`http://localhost:3333/categories/${id}`);
         const categoryData = await resCategory.json();
         setCategory(categoryData);
 
-        // Получаем продукты категории
-        const resProducts = await fetch(`http://localhost:3333/products?categoryId=${id}`);
-        const productsData = await resProducts.json();
-        setProducts(productsData);
+      
+        const resProducts = await fetch(`http://localhost:3333/products/all`);
+        const allProducts = await resProducts.json();
+        const filteredProducts = allProducts.filter(p => p.categoryId == id);
+        setProducts(filteredProducts);
       } catch (err) {
         console.error(err);
       } finally {
@@ -71,7 +70,7 @@ export default function CategoriesPage() {
                 alt={product.title}
                 sx={{ height: 200, objectFit: "cover" }}
                 onError={(e) => {
-                  e.target.onerror = null; // предотвращаем зацикливание
+                  e.target.onerror = null;
                   e.target.src = placeholderImage;
                 }}
               />

@@ -6,6 +6,7 @@ export default function CategoriesListPage() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
+
   const placeholderImage = "https://via.placeholder.com/260x200?text=No+Image";
 
   useEffect(() => {
@@ -13,7 +14,13 @@ export default function CategoriesListPage() {
       try {
         const res = await fetch("http://localhost:3333/categories/all");
         const data = await res.json();
-        setCategories(data);
+
+        const categoriesWithImages = data.map(cat => ({
+          ...cat,
+          image: cat.image ? `http://localhost:3333${cat.image}` : placeholderImage,
+        }));
+
+        setCategories(categoriesWithImages);
       } catch (err) {
         console.error(err);
       } finally {
@@ -34,7 +41,7 @@ export default function CategoriesListPage() {
       </Typography>
 
       <Box sx={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
-        {categories.map((category) => (
+        {categories.map(category => (
           <Card
             key={category.id}
             component={RouterLink}
@@ -43,7 +50,7 @@ export default function CategoriesListPage() {
           >
             <CardMedia
               component="img"
-              image={category.image ? `http://localhost:3333${category.image}` : placeholderImage}
+              image={category.image}
               alt={category.title}
               sx={{ height: 200, objectFit: "cover" }}
               onError={(e) => {
