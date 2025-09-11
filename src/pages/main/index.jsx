@@ -33,6 +33,7 @@ export default function Main() {
 
   return (
     <Box>
+      {/* Баннер */}
       <Box
         className={styles.bannerContainer}
         style={{ backgroundImage: `url(${backgroundImg})` }}
@@ -52,17 +53,14 @@ export default function Main() {
           </Button>
         </Container>
       </Box>
+
+      {/* Категории */}
       <Container sx={{ py: 6 }}>
         <Box display="flex" alignItems="center" mb={2}>
           <Typography variant="h2" sx={{ whiteSpace: "nowrap" }}>
             Categories
           </Typography>
-          <Box
-            sx={{
-              flex: 1,
-              borderBottom: "1px solid #8B8B8B",
-            }}
-          />
+          <Box sx={{ flex: 1, borderBottom: "1px solid #8B8B8B" }} />
           <Button
             component={RouterLink}
             to="/categories"
@@ -81,7 +79,12 @@ export default function Main() {
         </Box>
         <Box sx={{ mt: 3, display: "flex", gap: 3, flexWrap: "wrap" }}>
           {(categories.items || []).slice(0, 4).map((category) => (
-            <Card key={category.id} sx={{ width: 260 }}>
+            <Card
+              key={category.id}
+              component={RouterLink}
+              to={`/categories/${category.id}`} // <- переход на страницу категории
+              sx={{ width: 260, textDecoration: "none", color: "inherit" }}
+            >
               <CardMedia
                 component="img"
                 image={`http://localhost:3333${category.image}`}
@@ -94,6 +97,8 @@ export default function Main() {
           ))}
         </Box>
       </Container>
+
+      {/* Форма скидки */}
       <Box sx={{ background: "linear-gradient(90deg, #0D50FF 0%, #2451C6 100%)" }}>
         <Container
           sx={{
@@ -129,6 +134,8 @@ export default function Main() {
           </Box>
         </Container>
       </Box>
+
+      {/* Распродажа */}
       <Container sx={{ pt: 5 }}>
         <Typography variant="h2" gutterBottom>
           Sale
@@ -147,9 +154,13 @@ export default function Main() {
             return (
               <Card
                 key={item.id}
+                component={RouterLink}
+                to={`/products/${item.id}`} // <- переход на страницу товара
                 sx={{
                   width: 260,
                   position: "relative",
+                  textDecoration: "none",
+                  color: "inherit",
                 }}
               >
                 {discountPercent > 0 && (
@@ -204,6 +215,7 @@ export default function Main() {
     </Box>
   );
 }
+
 
 
 

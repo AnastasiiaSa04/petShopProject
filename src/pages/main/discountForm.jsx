@@ -1,4 +1,5 @@
 import { Box, TextField, Button, Typography } from "@mui/material";
+import React, { useState } from "react";
 
 export default function DiscountForm({ submitted, onSubmit }) {
   const [name, setName] = useState("");

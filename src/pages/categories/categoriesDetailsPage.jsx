@@ -18,11 +18,12 @@ import { addToBasket } from "../../redux/slices/basketSlice";
 export default function CategoryDetailsPage() {
   const { categoryId } = useParams();
   const dispatch = useDispatch();
+
   const [products, setProducts] = useState([]);
   const [categoryTitle, setCategoryTitle] = useState("");
   const [loading, setLoading] = useState(true);
   const [hoveredCard, setHoveredCard] = useState(null);
-  const [quantities, setQuantities] = useState({}); 
+  const [quantities, setQuantities] = useState({});
 
   useEffect(() => {
     const load = async () => {
@@ -42,9 +43,8 @@ export default function CategoryDetailsPage() {
         setCategoryTitle(currentCategory ? currentCategory.title : "Unknown category");
 
         const initialQuantities = {};
-        filteredProducts.forEach(p => initialQuantities[p.id] = 1);
+        filteredProducts.forEach((p) => (initialQuantities[p.id] = 1));
         setQuantities(initialQuantities);
-
       } catch (err) {
         console.error(err);
       } finally {
@@ -79,6 +79,11 @@ export default function CategoryDetailsPage() {
           const isHovered = hoveredCard === p.id;
           const quantity = quantities[p.id] || 1;
 
+          const discountPercent =
+            p.price && p.discont_price
+              ? Math.round(((p.price - p.discont_price) / p.price) * 100)
+              : 0;
+
           return (
             <Card
               key={p.id}
@@ -92,7 +97,30 @@ export default function CategoryDetailsPage() {
               onMouseEnter={() => setHoveredCard(p.id)}
               onMouseLeave={() => setHoveredCard(null)}
             >
-              <Link to={`/products/${p.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+              {discountPercent > 0 && (
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: 10,
+                    right: 10,
+                    bgcolor: "#0D50FF",
+                    color: "#fff",
+                    px: 1.2,
+                    py: 0.5,
+                    borderRadius: "8px",
+                    fontSize: "0.8rem",
+                    fontWeight: 600,
+                    zIndex: 10,
+                  }}
+                >
+                  -{discountPercent}%
+                </Box>
+              )}
+
+              <Link
+                to={`/products/${p.id}`}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
                 <CardMedia
                   component="img"
                   image={`http://localhost:3333${p.image}`}
@@ -101,23 +129,45 @@ export default function CategoryDetailsPage() {
                 />
                 <CardContent>
                   <Typography variant="h6">{p.title}</Typography>
-                  <Typography>${p.price}</Typography>
+
+                  {p.discont_price ? (
+                    <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+                      <Typography
+                        sx={{
+                          textDecoration: "line-through",
+                          color: "gray",
+                          fontSize: "0.9rem",
+                        }}
+                      >
+                        ${p.price}
+                      </Typography>
+                      <Typography color="black" sx={{ fontWeight: 600 }}>
+                        ${p.discont_price}
+                      </Typography>
+                    </Box>
+                  ) : (
+                    <Typography>${p.price}</Typography>
+                  )}
                 </CardContent>
               </Link>
 
               {isHovered && (
                 <Box sx={{ px: 1, pb: 1 }}>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
-                    <IconButton size="small" onClick={() => handleQuantityChange(p.id, -1)}>-</IconButton>
+                    <IconButton size="small" onClick={() => handleQuantityChange(p.id, -1)}>
+                      <RemoveIcon fontSize="small" />
+                    </IconButton>
                     <Typography>{quantity}</Typography>
-                    <IconButton size="small" onClick={() => handleQuantityChange(p.id, 1)}>+</IconButton>
+                    <IconButton size="small" onClick={() => handleQuantityChange(p.id, 1)}>
+                      <AddIcon fontSize="small" />
+                    </IconButton>
                   </Box>
                   <Button
                     fullWidth
                     variant="contained"
                     sx={{
                       bgcolor: "#0D50FF",
-                      "&:hover": { bgcolor: "#282828" },
+                      "&:hover": { bgcolor: "#282828", color: "#FFF" },
                     }}
                     onClick={() => handleAddToBasket(p)}
                   >
@@ -132,6 +182,7 @@ export default function CategoryDetailsPage() {
     </Container>
   );
 }
+
 
 
 
