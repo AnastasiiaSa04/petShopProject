@@ -210,9 +210,3 @@ export default function ProductDetailsPage() {
     </Container>
   );
 }
-
-
-
-
-
-

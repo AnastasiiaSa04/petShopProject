@@ -213,8 +213,3 @@ export default function Basket() {
     </Container>
   );
 }
-
-
-
-
-

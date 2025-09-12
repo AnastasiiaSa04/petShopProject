@@ -8,6 +8,7 @@ import {
   CardMedia,
   CardContent,
   Breadcrumbs,
+  Grid,
   Link as MuiLink,
 } from "@mui/material";
 
@@ -98,7 +99,7 @@ export default function CategoriesPage() {
         {category.title}
       </Typography>
 
-      <Box sx={{ display: "flex", gap: 4, flexWrap: "wrap", justifyContent: 'space-between' }}>
+      <Grid container spacing={4}>
         {products.length === 0 && <Typography>No products found in this category.</Typography>}
 
         {products.map((product) => {
@@ -107,32 +108,34 @@ export default function CategoriesPage() {
             : placeholderImage;
 
           return (
-            <Card
-              key={product.id}
-              component={RouterLink}
-              to={`/products/${product.id}`}
-              sx={{ width: 260, textDecoration: "none", color: "inherit" }}
-            >
-              <CardMedia
-                component="img"
-                image={imageUrl}
-                alt={product.title}
-                sx={{ height: 200, objectFit: "cover" }}
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = placeholderImage;
-                }}
-              />
-              <CardContent>
-                <Typography variant="h6">{product.title}</Typography>
-                <Typography variant="body1">
-                  ${product.discont_price || product.price}
-                </Typography>
-              </CardContent>
-            </Card>
+            <Grid size={{ xs: 6, md: 3 }}>
+              <Card
+                key={product.id}
+                component={RouterLink}
+                to={`/products/${product.id}`}
+                sx={{ width: 260, textDecoration: "none", color: "inherit" }}
+              >
+                <CardMedia
+                  component="img"
+                  image={imageUrl}
+                  alt={product.title}
+                  sx={{ objectFit: "cover" }}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = placeholderImage;
+                  }}
+                />
+                <CardContent>
+                  <Typography variant="h6">{product.title}</Typography>
+                  <Typography variant="body1">
+                    ${product.discont_price || product.price}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
           );
         })}
-      </Box>
+      </Grid>
     </Container>
   );
 }

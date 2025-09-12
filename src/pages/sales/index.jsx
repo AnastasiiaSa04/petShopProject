@@ -4,6 +4,7 @@ import { fetchSaleItems } from "../../redux/slices/salesSlice";
 import { addToBasket } from "../../redux/slices/basketSlice";
 import {
   Box,
+  Grid,
   Card,
   CardContent,
   CardMedia,
@@ -53,7 +54,7 @@ function SalesPage() {
     dispatch(addToBasket({ ...product, quantity: quantities[product.id] }));
   };
 
- 
+
   const filteredItems = useMemo(() => {
     return items
       .filter((item) => {
@@ -81,7 +82,7 @@ function SalesPage() {
 
   return (
     <Container sx={{ py: 6 }} maxWidth={false}>
-  
+
       <Breadcrumbs
         sx={{ mb: 3, alignItems: "center" }}
         separator={
@@ -132,7 +133,7 @@ function SalesPage() {
       </Typography>
 
       <Box sx={{ display: "flex", gap: 2, mb: 4, flexWrap: "wrap" }}>
-        <Typography sx={{mt: 0.5}}>Price</Typography>
+        <Typography sx={{ mt: 0.5 }}>Price</Typography>
         <TextField
           label="from"
           type="number"
@@ -147,7 +148,7 @@ function SalesPage() {
           value={priceTo}
           onChange={(e) => setPriceTo(e.target.value)}
         />
-        <Typography sx={{mt: 0.5}}>Sorted</Typography>
+        <Typography sx={{ mt: 0.5 }}>Sorted</Typography>
         <TextField
           select
           size="small"
@@ -162,7 +163,7 @@ function SalesPage() {
         </TextField>
       </Box>
 
-      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 3, justifyContent: 'space-between' }}>
+      <Grid container spacing={4} alignItems="stretch">
         {filteredItems.length === 0 && (
           <Typography>No sale items found.</Typography>
         )}
@@ -172,118 +173,118 @@ function SalesPage() {
           const discountPercent =
             product.price && product.discont_price
               ? Math.round(
-                  ((product.price - product.discont_price) / product.price) *
-                    100
-                )
+                ((product.price - product.discont_price) / product.price) *
+                100
+              )
               : 0;
 
           return (
-            <Card
-              key={product.id}
-              sx={{
-                width: 260,
-                position: "relative",
-                transition: "transform 0.3s",
-                transform: isHovered ? "scale(1.03)" : "scale(1)",
-              }}
-              onMouseEnter={() => setHoveredCard(product.id)}
-              onMouseLeave={() => setHoveredCard(null)}
-            >
-              {discountPercent > 0 && (
-                <Box
-                  sx={{
-                    position: "absolute",
-                    top: 10,
-                    right: 10,
-                    bgcolor: "#0D50FF",
-                    color: "#fff",
-                    px: 1,
-                    py: 0.5,
-                    borderRadius: 1,
-                    fontWeight: "bold",
-                    zIndex: 10,
-                  }}
-                >
-                  -{discountPercent}%
-                </Box>
-              )}
-
-              <RouterLink
-                to={`/products/${product.id}`}
-                style={{ textDecoration: "none", color: "inherit" }}
+            <Grid size={{ xs: 6, md: 3 }}>
+              <Card
+                key={product.id}
+                sx={{
+                  position: "relative",
+                  height: '100%',
+                  transition: "transform 0.3s",
+                  transform: isHovered ? "scale(1.03)" : "scale(1)",
+                }}
+                onMouseEnter={() => setHoveredCard(product.id)}
+                onMouseLeave={() => setHoveredCard(null)}
               >
-                <CardMedia
-                  component="img"
-                  image={`http://localhost:3333${product.image}`}
-                  alt={product.title}
-                  sx={{ height: 150, objectFit: "cover" }}
-                />
-                <CardContent>
-                  <Typography variant="h6">{product.title}</Typography>
-                  {product.discont_price && product.price && (
-                    <Box sx={{ display: "flex", gap: 1 }}>
-                      <Typography fontWeight="600" color="black">
-                        ${product.discont_price}
-                      </Typography>
-                      <Typography
-                        sx={{ textDecoration: "line-through", color: "gray" }}
-                      >
-                        ${product.price}
-                      </Typography>
-                    </Box>
-                  )}
-                  {!product.discont_price && (
-                    <Typography>${product.price}</Typography>
-                  )}
-                </CardContent>
-              </RouterLink>
-
-              {isHovered && (
-                <Box sx={{ px: 1, pb: 1 }}>
+                {discountPercent > 0 && (
                   <Box
                     sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
-                      mb: 1,
-                    }}
-                  >
-                    <IconButton
-                      size="small"
-                      onClick={() => handleQuantityChange(product.id, -1)}
-                    >
-                      <RemoveIcon />
-                    </IconButton>
-                    <Typography>{quantities[product.id]}</Typography>
-                    <IconButton
-                      size="small"
-                      onClick={() => handleQuantityChange(product.id, 1)}
-                    >
-                      <AddIcon />
-                    </IconButton>
-                  </Box>
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    sx={{
+                      position: "absolute",
+                      top: 10,
+                      right: 10,
                       bgcolor: "#0D50FF",
-                      color: "#FFF",
-                      "&:hover": { bgcolor: "#282828", color: "#FFF" },
+                      color: "#fff",
+                      px: 1,
+                      py: 0.5,
+                      borderRadius: 1,
+                      fontWeight: "bold",
+                      zIndex: 10,
                     }}
-                    onClick={() => handleAddToBasket(product)}
                   >
-                    Add to cart
-                  </Button>
-                </Box>
-              )}
-            </Card>
+                    -{discountPercent}%
+                  </Box>
+                )}
+
+                <RouterLink
+                  to={`/products/${product.id}`}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <CardMedia
+                    component="img"
+                    image={`http://localhost:3333${product.image}`}
+                    alt={product.title}
+                    sx={{ objectFit: "cover" }}
+                  />
+                  <CardContent>
+                    <Typography variant="h6">{product.title}</Typography>
+                    {product.discont_price && product.price && (
+                      <Box sx={{ display: "flex", gap: 1 }}>
+                        <Typography fontWeight="600" color="black">
+                          ${product.discont_price}
+                        </Typography>
+                        <Typography
+                          sx={{ textDecoration: "line-through", color: "gray" }}
+                        >
+                          ${product.price}
+                        </Typography>
+                      </Box>
+                    )}
+                    {!product.discont_price && (
+                      <Typography>${product.price}</Typography>
+                    )}
+                  </CardContent>
+                </RouterLink>
+
+                {isHovered && (
+                  <Box sx={{ px: 1, pb: 1 }}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
+                        mb: 1,
+                      }}
+                    >
+                      <IconButton
+                        size="small"
+                        onClick={() => handleQuantityChange(product.id, -1)}
+                      >
+                        <RemoveIcon />
+                      </IconButton>
+                      <Typography>{quantities[product.id]}</Typography>
+                      <IconButton
+                        size="small"
+                        onClick={() => handleQuantityChange(product.id, 1)}
+                      >
+                        <AddIcon />
+                      </IconButton>
+                    </Box>
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      sx={{
+                        bgcolor: "#0D50FF",
+                        color: "#FFF",
+                        "&:hover": { bgcolor: "#282828", color: "#FFF" },
+                      }}
+                      onClick={() => handleAddToBasket(product)}
+                    >
+                      Add to cart
+                    </Button>
+                  </Box>
+                )}
+              </Card>
+            </Grid>
           );
         })}
-      </Box>
+      </Grid>
     </Container>
   );
 }
 
 export default SalesPage;
-
-

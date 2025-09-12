@@ -10,6 +10,7 @@ import {
   Card,
   CardContent,
   CardMedia,
+  Grid
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
@@ -56,7 +57,7 @@ export default function Main() {
 
       <Container sx={{ py: 6 }} maxWidth={false}>
         <Box display="flex" alignItems="center" mb={2}>
-          <Typography variant="h2" sx={{ whiteSpace: "nowrap" }}>
+          <Typography variant="h2" sx={{ whiteSpace: "nowrap" }} pr={2}>
             Categories
           </Typography>
           <Box sx={{ flex: 1, borderBottom: "1px solid #8B8B8B" }} />
@@ -76,25 +77,27 @@ export default function Main() {
             All categories
           </Button>
         </Box>
-        <Box sx={{ mt: 3, display: "flex", gap: 3, flexWrap: "wrap",  justifyContent: "space-between" }}>
+        <Grid container  spacing={4} sx={{ mt: 3 }}>
           {(categories.items || []).slice(0, 4).map((category) => (
-            <Card
-              key={category.id}
-              component={RouterLink}
-              to={`/categories/${category.id}`} 
-              sx={{ width: 260, textDecoration: "none", color: "inherit" }}
-            >
-              <CardMedia
-                component="img"
-                image={`http://localhost:3333${category.image}`}
-                alt={category.title}
-              />
-              <CardContent>
-                <Typography variant="h6">{category.title}</Typography>
-              </CardContent>
-            </Card>
+            <Grid size={{ xs: 6, md: 3 }}>
+              <Card
+                key={category.id}
+                component={RouterLink}
+                to={`/categories/${category.id}`} 
+                sx={{ textDecoration: "none", color: "inherit" }}
+              >
+                <CardMedia
+                  component="img"
+                  image={`http://localhost:3333${category.image}`}
+                  alt={category.title}
+                />
+                <CardContent>
+                  <Typography variant="h6">{category.title}</Typography>
+                </CardContent>
+              </Card>
+              </Grid>
           ))}
-        </Box>
+        </Grid>
       </Container>
       <Box sx={{ background: "linear-gradient(90deg, #0D50FF 0%, #2451C6 100%)" }}>
         <Container
@@ -134,7 +137,7 @@ export default function Main() {
 
       <Container sx={{ pt: 5 }} maxWidth={false}>
         <Box display="flex" alignItems="center" mb={2}>
-          <Typography variant="h2" sx={{ whiteSpace: "nowrap" }}>
+          <Typography variant="h2" sx={{ whiteSpace: "nowrap" }} pr={2}>
             Sale
           </Typography>
           <Box sx={{ flex: 1, borderBottom: "1px solid #8B8B8B" }} />
@@ -155,7 +158,7 @@ export default function Main() {
           </Button>
         </Box>
 
-        <Box sx={{ display: "flex", gap: 4, flexWrap: "wrap", justifyContent: 'space-between' }}>
+        <Grid container spacing={4}>
           {saleItems.slice(0, 4).map((item) => {
             const discountPercent =
               item.price && item.discont_price
@@ -163,7 +166,8 @@ export default function Main() {
                 : 0;
 
             return (
-              <Card
+              <Grid size={{ xs: 6, md: 3 }} spacing={4}>
+                <Card
                 key={item.id}
                 component={RouterLink}
                 to={`/products/${item.id}`} 
@@ -173,55 +177,56 @@ export default function Main() {
                   textDecoration: "none",
                   color: "inherit",
                 }}
-              >
-                {discountPercent > 0 && (
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      top: 10,
-                      right: 10,
-                      bgcolor: theme.palette.secondary.main,
-                      color: "#fff",
-                      px: 1,
-                      py: 0.5,
-                      borderRadius: 1,
-                      fontWeight: theme.typography.button.fontWeight,
-                      fontSize: theme.typography.button.fontSize,
-                      fontFamily: theme.typography.fontFamily,
-                      zIndex: 10,
-                    }}
-                  >
-                    -{discountPercent}%
-                  </Box>
-                )}
-
-                <CardMedia
-                  component="img"
-                  image={`http://localhost:3333${item.image}`}
-                  alt={item.title}
-                  sx={{ height: 200, objectFit: "cover" }}
-                />
-
-                <CardContent>
-                  <Typography variant="h6">{item.title}</Typography>
-                  {item.price && item.discont_price && (
-                    <Box sx={{ display: "flex", gap: 1 }}>
-                      <Typography fontSize="40px" fontWeight="600" color="black">
-                        ${item.discont_price}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        sx={{ textDecoration: "line-through", color: "gray" }}
-                      >
-                        ${item.price}
-                      </Typography>
+                >
+                  {discountPercent > 0 && (
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        top: 10,
+                        right: 10,
+                        bgcolor: theme.palette.secondary.main,
+                        color: "#fff",
+                        px: 1,
+                        py: 0.5,
+                        borderRadius: 1,
+                        fontWeight: theme.typography.button.fontWeight,
+                        fontSize: theme.typography.button.fontSize,
+                        fontFamily: theme.typography.fontFamily,
+                        zIndex: 10,
+                      }}
+                    >
+                      -{discountPercent}%
                     </Box>
                   )}
-                </CardContent>
-              </Card>
+
+                  <CardMedia
+                    component="img"
+                    image={`http://localhost:3333${item.image}`}
+                    alt={item.title}
+                    sx={{ objectFit: "cover" }}
+                  />
+
+                  <CardContent>
+                    <Typography variant="h6">{item.title}</Typography>
+                    {item.price && item.discont_price && (
+                      <Box sx={{ display: "flex", gap: 1 }}>
+                        <Typography fontSize="40px" fontWeight="600" color="black">
+                          ${item.discont_price}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          sx={{ textDecoration: "line-through", color: "gray" }}
+                        >
+                          ${item.price}
+                        </Typography>
+                      </Box>
+                    )}
+                  </CardContent>
+                </Card>
+              </Grid>
             );
           })}
-        </Box>
+        </Grid>
       </Container>
     </Box>
   );

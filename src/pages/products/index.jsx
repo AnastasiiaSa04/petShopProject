@@ -8,6 +8,7 @@ import {
   Card,
   CardContent,
   CardMedia,
+  Grid,
   Typography,
   Container,
   IconButton,
@@ -151,146 +152,148 @@ export default function ProductPage() {
         All Products
       </Typography>
 
-<Box
-  sx={{
-    display: "flex",
-    flexWrap: "wrap",
-    gap: 2,
-    mb: 4,
-    alignItems: "center",
-  }}
-> 
-<Typography>Price</Typography>
-  <TextField
-    label="From"
-    size="small"
-    type="number"
-    value={priceFrom}
-    onChange={(e) => setPriceFrom(e.target.value)}
-    sx={{
-      width: 100,
-      "& .MuiOutlinedInput-root": {
-        "& fieldset": { borderColor: "#8B8B8B" },
-        "&:hover fieldset": { borderColor: "#2451C6" },
-        "&.Mui-focused fieldset": { borderColor: "#2451C6" },
-      },
-    }}
-  />
-
-  <TextField
-    label="To"
-    size="small"
-    type="number"
-    value={priceTo}
-    onChange={(e) => setPriceTo(e.target.value)}
-    sx={{
-      width: 100,
-      "& .MuiOutlinedInput-root": {
-        "& fieldset": { borderColor: "#8B8B8B" },
-        "&:hover fieldset": { borderColor: "#2451C6" },
-        "&.Mui-focused fieldset": { borderColor: "#2451C6" },
-      },
-    }}
-  />
-
-  <FormControlLabel
-    control={
-      <Checkbox
-        checked={discountOnly}
-        onChange={(e) => setDiscountOnly(e.target.checked)}
+      <Box
         sx={{
-          color: "#8B8B8B",
-          "&.Mui-checked": { color: "#4CAF50" },
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 2,
+          mb: 4,
+          alignItems: "center",
         }}
-      />
-    }
-    label="Discounted items"
-  />
+      >
+        <Typography>Price</Typography>
+        <TextField
+          label="From"
+          size="small"
+          type="number"
+          value={priceFrom}
+          onChange={(e) => setPriceFrom(e.target.value)}
+          sx={{
+            width: 100,
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": { borderColor: "#8B8B8B" },
+              "&:hover fieldset": { borderColor: "#2451C6" },
+              "&.Mui-focused fieldset": { borderColor: "#2451C6" },
+            },
+          }}
+        />
 
-  <Select
-    size="small"
-    value={sort}
-    onChange={(e) => setSort(e.target.value)}
-    sx={{
-      minWidth: 180,
-      "& .MuiOutlinedInput-notchedOutline": { borderColor: "#8B8B8B" },
-      "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#2451C6" },
-      "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#2451C6" },
-    }}
-  >
-    <MenuItem value="default">Default</MenuItem>
-    <MenuItem value="priceAsc">Price: Low to High</MenuItem>
-    <MenuItem value="priceDesc">Price: High to Low</MenuItem>
-    <MenuItem value="titleAsc">Title: A-Z</MenuItem>
-    <MenuItem value="titleDesc">Title: Z-A</MenuItem>
-  </Select>
-</Box>
+        <TextField
+          label="To"
+          size="small"
+          type="number"
+          value={priceTo}
+          onChange={(e) => setPriceTo(e.target.value)}
+          sx={{
+            width: 100,
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": { borderColor: "#8B8B8B" },
+              "&:hover fieldset": { borderColor: "#2451C6" },
+              "&.Mui-focused fieldset": { borderColor: "#2451C6" },
+            },
+          }}
+        />
+
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={discountOnly}
+              onChange={(e) => setDiscountOnly(e.target.checked)}
+              sx={{
+                color: "#8B8B8B",
+                "&.Mui-checked": { color: "#4CAF50" },
+              }}
+            />
+          }
+          label="Discounted items"
+        />
+
+        <Select
+          size="small"
+          value={sort}
+          onChange={(e) => setSort(e.target.value)}
+          sx={{
+            minWidth: 180,
+            "& .MuiOutlinedInput-notchedOutline": { borderColor: "#8B8B8B" },
+            "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#2451C6" },
+            "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#2451C6" },
+          }}
+        >
+          <MenuItem value="default">Default</MenuItem>
+          <MenuItem value="priceAsc">Price: Low to High</MenuItem>
+          <MenuItem value="priceDesc">Price: High to Low</MenuItem>
+          <MenuItem value="titleAsc">Title: A-Z</MenuItem>
+          <MenuItem value="titleDesc">Title: Z-A</MenuItem>
+        </Select>
+      </Box>
 
 
 
 
-      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 3, justifyContent: 'space-between' }}>
+      <Grid container spacing={4} alignItems="stretch">
         {filteredProducts.map((product) => {
           const isHovered = hoveredCard === product.id;
           const quantity = quantities[product.id] || 1;
 
           return (
-            <Card
-              key={product.id}
-              sx={{
-                width: 260,
-                position: "relative",
-                transition: "transform 0.3s",
-                transform: isHovered ? "scale(1.03)" : "scale(1)",
-              }}
-              onMouseEnter={() => setHoveredCard(product.id)}
-              onMouseLeave={() => setHoveredCard(null)}
-            >
-              <CardMedia
-                component="img"
-                image={`http://localhost:3333${product.image}`}
-                alt={product.title}
-                sx={{ height: 150, objectFit: "cover" }}
-              />
-              <CardContent>
-                <Typography variant="h6">{product.title}</Typography>
-                {product.discont_price ? (
-                  <Box sx={{ display: "flex", gap: 1 }}>
-                    <Typography fontWeight="600">${product.discont_price}</Typography>
-                    <Typography sx={{ textDecoration: "line-through", color: "gray" }}>
-                      ${product.price}
-                    </Typography>
-                  </Box>
-                ) : (
-                  <Typography>${product.price}</Typography>
-                )}
-              </CardContent>
+            <Grid size={{ xs: 6, md: 3 }}>
+              <Card
+                key={product.id}
+                sx={{
+                  height: '100%',
+                  position: "relative",
+                  transition: "transform 0.3s",
+                  transform: isHovered ? "scale(1.03)" : "scale(1)",
+                }}
+                onMouseEnter={() => setHoveredCard(product.id)}
+                onMouseLeave={() => setHoveredCard(null)}
+              >
+                <CardMedia
+                  component="img"
+                  image={`http://localhost:3333${product.image}`}
+                  alt={product.title}
+                  sx={{ height: 150, objectFit: "cover" }}
+                />
+                <CardContent>
+                  <Typography variant="h6">{product.title}</Typography>
+                  {product.discont_price ? (
+                    <Box sx={{ display: "flex", gap: 1 }}>
+                      <Typography fontWeight="600">${product.discont_price}</Typography>
+                      <Typography sx={{ textDecoration: "line-through", color: "gray" }}>
+                        ${product.price}
+                      </Typography>
+                    </Box>
+                  ) : (
+                    <Typography>${product.price}</Typography>
+                  )}
+                </CardContent>
 
-              {isHovered && (
-                <Box sx={{ px: 2, pb: 2 }}>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
-                    <IconButton size="small" onClick={() => handleQuantityChange(product.id, -1)}>
-                      <RemoveIcon />
-                    </IconButton>
-                    <Typography>{quantity}</Typography>
-                    <IconButton size="small" onClick={() => handleQuantityChange(product.id, 1)}>
-                      <AddIcon />
-                    </IconButton>
+                {isHovered && (
+                  <Box sx={{ px: 2, pb: 2 }}>
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
+                      <IconButton size="small" onClick={() => handleQuantityChange(product.id, -1)}>
+                        <RemoveIcon />
+                      </IconButton>
+                      <Typography>{quantity}</Typography>
+                      <IconButton size="small" onClick={() => handleQuantityChange(product.id, 1)}>
+                        <AddIcon />
+                      </IconButton>
+                    </Box>
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      sx={{ bgcolor: "#0D50FF", color: "#fff", "&:hover": { bgcolor: "#282828" } }}
+                      onClick={() => handleAddToBasket(product)}
+                    >
+                      Add to cart
+                    </Button>
                   </Box>
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    sx={{ bgcolor: "#0D50FF", color: "#fff", "&:hover": { bgcolor: "#282828" } }}
-                    onClick={() => handleAddToBasket(product)}
-                  >
-                    Add to cart
-                  </Button>
-                </Box>
-              )}
-            </Card>
+                )}
+              </Card>
+            </Grid>
           );
         })}
-      </Box>
+      </Grid>
     </Container>
   );
 }
