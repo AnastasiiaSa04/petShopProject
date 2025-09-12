@@ -63,7 +63,7 @@ const getCardStyles = (isLink = false) => ({
 });
 
 const ContactCard = ({ label, value, href, gridSize = { xs: 12, md: 6 } }) => (
-  <Grid item size={gridSize} sx={{ display: 'flex' }}>
+  <Grid size={gridSize} sx={{ display: 'flex' }}>
     <Card
       sx={getCardStyles(!!href)}
       component={href ? 'a' : 'div'}
