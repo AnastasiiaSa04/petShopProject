@@ -7,6 +7,8 @@ import {
   Card,
   CardMedia,
   CardContent,
+  Breadcrumbs,
+  Link as MuiLink,
 } from "@mui/material";
 
 export default function CategoriesPage() {
@@ -20,12 +22,10 @@ export default function CategoriesPage() {
   useEffect(() => {
     const loadCategoryAndProducts = async () => {
       try {
-   
         const resCategory = await fetch(`http://localhost:3333/categories/${id}`);
         const categoryData = await resCategory.json();
         setCategory(categoryData);
 
-      
         const resProducts = await fetch(`http://localhost:3333/products/all`);
         const allProducts = await resProducts.json();
         const filteredProducts = allProducts.filter(p => p.categoryId == id);
@@ -44,12 +44,61 @@ export default function CategoriesPage() {
   if (!category) return <Typography>Category not found</Typography>;
 
   return (
-    <Container sx={{ py: 6 }}>
+    <Container sx={{ py: 6 }} maxWidth={false}>
+      <Breadcrumbs
+        sx={{ mb: 3, alignItems: "center" }}
+        separator={
+          <Box
+            sx={{
+              display: "inline-block",
+              width: "40px",
+              height: "1px",
+              bgcolor: "#8B8B8B",
+              mx: 1,
+            }}
+          />
+        }
+      >
+        <MuiLink
+          component={RouterLink}
+          to="/"
+          underline="none"
+          sx={{
+            color: "#8B8B8B",
+            border: "1px solid #8B8B8B",
+            px: 1.5,
+            py: 0.5,
+            borderRadius: "6px",
+            "&:hover": { backgroundColor: "#f0f0f0" },
+            fontWeight: 600,
+          }}
+        >
+          Main
+        </MuiLink>
+
+        <MuiLink
+          component={RouterLink}
+          to="/categories"
+          underline="none"
+          sx={{
+            color: "#8B8B8B",
+            border: "1px solid #8B8B8B",
+            px: 1.5,
+            py: 0.5,
+            borderRadius: "6px",
+            "&:hover": { backgroundColor: "#f0f0f0" },
+            fontWeight: 600,
+          }}
+        >
+          Categories
+        </MuiLink>
+      </Breadcrumbs>
+
       <Typography variant="h3" sx={{ mb: 4 }}>
         {category.title}
       </Typography>
 
-      <Box sx={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
+      <Box sx={{ display: "flex", gap: 4, flexWrap: "wrap", justifyContent: 'space-between' }}>
         {products.length === 0 && <Typography>No products found in this category.</Typography>}
 
         {products.map((product) => {
@@ -87,6 +136,8 @@ export default function CategoriesPage() {
     </Container>
   );
 }
+
+
 
 
 

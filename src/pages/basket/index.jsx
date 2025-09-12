@@ -52,7 +52,7 @@ export default function Basket() {
   };
 
   return (
-    <Container sx={{ py: 6 }}>
+    <Container sx={{ py: 6 }} maxWidth={false}>
       <Typography variant="h2" sx={{ mb: 3 }}>
         Shopping cart
       </Typography>
@@ -63,7 +63,6 @@ export default function Basket() {
         </Typography>
       ) : (
         <Box sx={{ display: "flex", gap: 4 }}>
-          {/* Список товаров */}
           <Box sx={{ flex: 2, display: "flex", flexDirection: "column", gap: 2 }}>
             {items.map((i) => (
               <Box

@@ -1,11 +1,19 @@
 import { useEffect, useState } from "react";
-import { Container, Typography, Box, Card, CardMedia, CardContent } from "@mui/material";
+import {
+  Container,
+  Typography,
+  Box,
+  Card,
+  CardMedia,
+  CardContent,
+  Breadcrumbs,
+  Link as MuiLink,
+} from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
 export default function CategoriesListPage() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
-
 
   const placeholderImage = "https://via.placeholder.com/260x200?text=No+Image";
 
@@ -35,12 +43,57 @@ export default function CategoriesListPage() {
   if (categories.length === 0) return <Typography>No categories found.</Typography>;
 
   return (
-    <Container sx={{ py: 6 }}>
+    <Container sx={{ py: 6 }} maxWidth={false}>
+      <Breadcrumbs
+        sx={{ mb: 3, alignItems: "center" }}
+        separator={
+          <Box
+            sx={{
+              display: "inline-block",
+              width: "40px",
+              height: "1px",
+              bgcolor: "#8B8B8B",
+              mx: 1,
+            }}
+          />
+        }
+      >
+        <MuiLink
+          component={RouterLink}
+          to="/"
+          underline="none"
+          sx={{
+            color: "#8B8B8B",
+            border: "1px solid #8B8B8B",
+            px: 1.5,
+            py: 0.5,
+            borderRadius: "6px",
+            "&:hover": { backgroundColor: "#f0f0f0" },
+            fontWeight: 600,
+          }}
+        >
+          Main
+        </MuiLink>
+
+        <Typography
+          sx={{
+            border: "1px solid #282828",
+            px: 1.5,
+            py: 0.5,
+            borderRadius: "6px",
+            color: "#282828",
+            fontWeight: 600,
+          }}
+        >
+          Categories
+        </Typography>
+      </Breadcrumbs>
+
       <Typography variant="h3" sx={{ mb: 4 }}>
         Categories
       </Typography>
 
-      <Box sx={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
+      <Box sx={{ display: "flex", gap: 4, flexWrap: "wrap", justifyContent: 'space-between' }}>
         {categories.map(category => (
           <Card
             key={category.id}

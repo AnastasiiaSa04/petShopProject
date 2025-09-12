@@ -185,8 +185,6 @@ export default function ProductDetailsPage() {
               </Box>
             )}
           </Box>
-
-          {/* Количество и кнопка добавления в корзину */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
             <IconButton size="small" onClick={() => handleQuantityChange(-1)}>
               <RemoveIcon />

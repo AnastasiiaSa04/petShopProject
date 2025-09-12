@@ -54,7 +54,7 @@ export default function Main() {
         </Container>
       </Box>
 
-      <Container sx={{ py: 6 }}>
+      <Container sx={{ py: 6 }} maxWidth={false}>
         <Box display="flex" alignItems="center" mb={2}>
           <Typography variant="h2" sx={{ whiteSpace: "nowrap" }}>
             Categories
@@ -76,7 +76,7 @@ export default function Main() {
             All categories
           </Button>
         </Box>
-        <Box sx={{ mt: 3, display: "flex", gap: 3, flexWrap: "wrap" }}>
+        <Box sx={{ mt: 3, display: "flex", gap: 3, flexWrap: "wrap",  justifyContent: "space-between" }}>
           {(categories.items || []).slice(0, 4).map((category) => (
             <Card
               key={category.id}
@@ -132,7 +132,7 @@ export default function Main() {
         </Container>
       </Box>
 
-      <Container sx={{ pt: 5 }}>
+      <Container sx={{ pt: 5 }} maxWidth={false}>
         <Box display="flex" alignItems="center" mb={2}>
           <Typography variant="h2" sx={{ whiteSpace: "nowrap" }}>
             Sale
@@ -155,7 +155,7 @@ export default function Main() {
           </Button>
         </Box>
 
-        <Box sx={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
+        <Box sx={{ display: "flex", gap: 4, flexWrap: "wrap", justifyContent: 'space-between' }}>
           {saleItems.slice(0, 4).map((item) => {
             const discountPercent =
               item.price && item.discont_price
